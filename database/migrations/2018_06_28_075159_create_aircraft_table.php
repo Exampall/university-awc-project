@@ -19,11 +19,15 @@ class CreateAircraftTable extends Migration {
             $table->unsignedInteger('wingspan');
             $table->unsignedInteger('radius');
             $table->char('engine_type', 1);
+            $table->unsignedBigInteger('airline');
 
             $table->timestamps();
 
             $table->foreign('type')
                 ->references('id')->on('aircraft_types')
+                ->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('airline')
+                ->references('id')->on('airline')
                 ->onDelete('cascade')->onUpdate('cascade');
         });
 

@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 class Aircraft extends Model {
-    protected $table = 'aircraft_types';
+    protected $table = 'aircraft';
 
     protected $fillable = [
         'type',
@@ -13,10 +13,15 @@ class Aircraft extends Model {
         'max_speed',
         'wingspan',
         'radius',
-        'engine_type'
+        'engine_type',
+        'airline',
     ];
 
     public function type() {
         return $this->belongsTo('App\AircraftType', 'type');
+    }
+
+    public function partOfAirline() {
+        return $this->belongsTo('App\Airline', 'airline');
     }
 }

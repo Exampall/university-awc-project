@@ -18,6 +18,8 @@ class CreateCountryTable extends Migration
             $table->string('name');
 
             $table->timestamps();
+
+            $table->unique('name');
         });
     }
 

@@ -9,7 +9,7 @@ class AircraftType extends Model {
 
     protected $fillable = [
         'name',
-        'code'
+        'code',
     ];
 
     public function aircrafts() {

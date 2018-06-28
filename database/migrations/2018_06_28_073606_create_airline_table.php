@@ -13,11 +13,13 @@ class CreateAirlineTable extends Migration {
     public function up() {
         Schema::create('airline', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name');
             $table->unsignedBigInteger('nationality');
             $table->integer('share_price');
 
             $table->timestamps();
 
+            $table->unique('name');
             $table->foreign('nationality')
                 ->references('id')->on('country')
                 ->onDelete('cascade')->onUpdate('cascade');
