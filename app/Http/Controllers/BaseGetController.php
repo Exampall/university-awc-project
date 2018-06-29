@@ -47,8 +47,8 @@ abstract class BaseGetController extends Controller implements GetController {
      * @param $model
      * @return mixed
      */
-    protected function filterQuery(Request $request, $model) {
-        return $model::query();
+    protected function filterQuery(Request $request) {
+        return $this->getModel()::query();
     }
 
     /**

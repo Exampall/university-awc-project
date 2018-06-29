@@ -8,7 +8,7 @@ use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 use Illuminate\Http\Request;
 use App\Models\Airport;
 
-class AirportController extends BaseGetController {
+class AirportController extends BaseCrudController {
 
     protected function getModel() {
         return Airport::class;

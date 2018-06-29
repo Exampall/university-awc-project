@@ -6,11 +6,11 @@ use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 use Illuminate\Http\Request;
-use App\Models\Airline;
+use App\Models\AircraftType;
 
-class AirlineController extends BaseCrudController {
+class AircraftTypeController extends BaseGetController {
 
     protected function getModel() {
-        return Airline::class;
+        return AircraftType::class;
     }
 }

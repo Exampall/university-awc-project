@@ -29,9 +29,16 @@ $router->group(['prefix' => App\Models\Airline::$path], function () use ($router
 $router->group(['prefix' => 'aircraft'], function () use ($router) {
     $router->get('/', 'AircraftController@getAll');
     $router->get('/{id}', 'AircraftController@getOne');
+    $router->post('/', 'AircraftController@postOne');
+    $router->delete('/{id}', 'AircraftController@deleteOne');
 });
 
 $router->group(['prefix' => 'air-route'], function () use ($router) {
     $router->get('/', 'AirRouteController@getAll');
     $router->get('/{id}', 'AirRouteController@getOne');
+});
+
+$router->group(['prefix' => 'aircraft-type'], function () use ($router) {
+    $router->get('/', 'AircraftTypeController@getAll');
+    $router->get('/{id}', 'AircraftTypeController@getOne');
 });
