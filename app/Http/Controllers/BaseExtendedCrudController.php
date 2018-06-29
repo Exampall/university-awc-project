@@ -2,22 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\BaseGetController;
-use App\Http\Controllers\CrudController;
+use App\Http\Controllers\BaseCrudController;
+use App\Http\Controllers\ExtendedCrudController;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Http\Request;
 
-abstract class BaseCrudController extends BaseGetController implements CrudController {
+abstract class BaseExtendedCrudController extends BaseCrudController implements ExtendedCrudController {
 
     /**
      * @param Request $request
+     * @param $id
      * @return mixed
      */
-    public function postOne(Request $request) {
+    public function putOne(Request $request, $id) {
+        $model = $this->findOne($id);
+
         $input = $this->validateInput($request);
 
-        $this->getModel()::create($input);
+        $model->update($input);
 
         return response()
             ->json(
@@ -27,13 +30,16 @@ abstract class BaseCrudController extends BaseGetController implements CrudContr
     }
 
     /**
+     * @param Request $id
      * @param $id
      * @return mixed
      */
-    public function deleteOne($id) {
-        $one = $this->findOne($id);
+    public function patchOne(Request $request, $id) {
+        $model = $this->findOne($id);
 
-        $one->delete();
+        $input = $this->validatePatchInput($request);
+
+        $model->update($input);
 
         return response()
             ->json(
@@ -49,7 +55,7 @@ abstract class BaseCrudController extends BaseGetController implements CrudContr
      * @param Request $request
      * @return array
      */
-    protected function validateInput(Request $request): array {
+    protected function validatePatchInput(Request $request): array {
         return $request->input();
     }
 }

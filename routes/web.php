@@ -31,6 +31,8 @@ $router->group(['prefix' => 'aircraft'], function () use ($router) {
     $router->get('/{id}', 'AircraftController@getOne');
     $router->post('/', 'AircraftController@postOne');
     $router->delete('/{id}', 'AircraftController@deleteOne');
+    $router->put('/{id}', 'AircraftController@putOne');
+    $router->patch('/{id}', 'AircraftController@patchOne');
 });
 
 $router->group(['prefix' => 'air-route'], function () use ($router) {

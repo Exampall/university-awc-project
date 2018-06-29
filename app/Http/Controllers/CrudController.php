@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\GetController;
 use Illuminate\Http\Request;
 
 interface CrudController extends GetController {
