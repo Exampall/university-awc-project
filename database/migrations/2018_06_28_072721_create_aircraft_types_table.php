@@ -23,7 +23,7 @@ class CreateAircraftTypesTable extends Migration
             $table->unique('code');
         });
 
-        DB::statement('ALTER TABLE aircraft_types ADD CONSTRAINT chk_not_same_airport CHECK (code IN (\'LI\', \'FC\', \'SC\'));');
+        DB::statement('ALTER TABLE aircraft_types ADD CONSTRAINT chk_valid_type_code CHECK (code IN (\'AL\', \'LM\', \'SC\', \'HA\'));');
     }
 
     /**

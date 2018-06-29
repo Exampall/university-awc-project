@@ -8,6 +8,7 @@ class Airline extends Model {
     protected $table = 'airline';
 
     protected $fillable = [
+        'name',
         'nationality',
         'share_price'
     ];
