@@ -11,8 +11,21 @@ class Airport extends Model {
         'name',
         'country'
     ];
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
 
     public function situated() {
-        return $this->belongsTo('App\Country', 'country');
+        return $this->belongsTo('App\Models\Country', 'country');
+    }
+
+    public function toArray()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'country' => $this->situated
+        ];
     }
 }

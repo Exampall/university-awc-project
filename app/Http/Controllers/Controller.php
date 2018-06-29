@@ -41,7 +41,7 @@ class Controller extends BaseController {
      * @return mixed
      */
     protected function paginate(Request $request, $query) {
-        $url = $request->url();
+        $url = env('BASE_URL') . $request->path();
         $additionalQueryParams = $request->except(['page', 'batch']);
         $url .= '?';
         foreach ($additionalQueryParams as $param => $value) {

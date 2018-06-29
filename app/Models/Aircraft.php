@@ -16,12 +16,30 @@ class Aircraft extends Model {
         'engine_type',
         'airline',
     ];
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
 
-    public function type() {
-        return $this->belongsTo('App\AircraftType', 'type');
+    public function model() {
+        return $this->belongsTo('App\Models\AircraftType', 'type');
     }
 
     public function partOfAirline() {
-        return $this->belongsTo('App\Airline', 'airline');
+        return $this->belongsTo('App\Models\Airline', 'airline');
+    }
+
+    public function toArray()
+    {
+        return [
+            'id' => $this->id,
+            'type' => $this->model,
+            'seats' => $this->seats,
+            'maxSpeed' => $this->max_speed,
+            'wingspan' => $this->wingspan,
+            'radius' => $this->radius,
+            'engineType' => $this->engine_type,
+            'airline' => Airline::toUrl($this->partOfAirline->id)
+        ];
     }
 }
