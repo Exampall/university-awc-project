@@ -11,11 +11,11 @@ class AirRoute extends Model {
         'type',
         'airport_departure',
         'airport_arrival',
-        'max_slot_reservations'
+        'max_slot_reservations',
     ];
     protected $hidden = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     public function departFrom() {
@@ -33,6 +33,16 @@ class AirRoute extends Model {
     public function slot() {
         return $this->hasMany('App\Models\AirRouteSlot', 'air_route');
     }
+
+    public function toArray() {
+        return [
+            'id' => $this->id,
+            'type' => $this->type,
+            'airportDeparture' => $this->departFrom,
+            'airportArrival' => $this->arriveTo,
+            'maxSlotReservations' => $this->max_slot_reservations,
+        ];
+    }
 }
 
 class AirRouteSlot extends Model {
@@ -41,11 +51,11 @@ class AirRouteSlot extends Model {
     protected $fillable = [
         'air_route',
         'day',
-        'schedule'
+        'schedule',
     ];
     protected $hidden = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     public function partOf() {

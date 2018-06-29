@@ -30,3 +30,8 @@ $router->group(['prefix' => 'aircraft'], function () use ($router) {
     $router->get('/', 'AircraftController@getAll');
     $router->get('/{id}', 'AircraftController@getOne');
 });
+
+$router->group(['prefix' => 'air-route'], function () use ($router) {
+    $router->get('/', 'AirRouteController@getAll');
+    $router->get('/{id}', 'AirRouteController@getOne');
+});
