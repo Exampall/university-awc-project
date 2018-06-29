@@ -11,15 +11,15 @@ class AirRouteSeeder extends Seeder
      */
     public function run()
     {
-        $airRoutes = factory(App\AirRoute::class, 42)->create();
+        $airRoutes = factory(App\Models\AirRoute::class, 42)->create();
 
         foreach ($airRoutes as  $airRoute) {
-            factory(App\AirRouteSlot::class, rand(1, 15))->create([
+            factory(App\Models\AirRouteSlot::class, rand(1, 15))->create([
                 'air_route' => $airRoute->id
             ]);
 
             $numberOfAircraftTypes = rand(1, 4);
-            $aircraftTypes = App\AircraftType::limit($numberOfAircraftTypes)->get();
+            $aircraftTypes = App\Models\AircraftType::limit($numberOfAircraftTypes)->get();
             foreach ($aircraftTypes as $aircraftType) {
                 $airRoute->aircraftTypes()->attach(['aircraft_type' => $aircraftType->id]);
             }

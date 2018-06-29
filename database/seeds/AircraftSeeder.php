@@ -11,6 +11,6 @@ class AircraftSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Aircraft::class, 56)->create();
+        factory(App\Models\Aircraft::class, 56)->create();
     }
 }

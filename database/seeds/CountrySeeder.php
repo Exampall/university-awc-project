@@ -11,6 +11,6 @@ class CountrySeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Country::class, 120)->create();
+        factory(App\Models\Country::class, 120)->create();
     }
 }
