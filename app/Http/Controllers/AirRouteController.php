@@ -15,8 +15,8 @@ class AirRouteController extends BaseExtendedCrudController {
             ],
             'airport_departure' => 'required|integer|min:1|exists:airport,id|different:airport_arrival',
             'airport_arrival' => 'required|integer|min:1|exists:airport,id|different:airport_departure',
-            'max_slot_reservations' => 'required|integer|min:1|',
-            'aircraft_types' => 'present|array',
+            'max_slot_reservations' => 'required|integer|min:1',
+            'aircraft_types' => 'required|array|min:1',
             'aircraft_types.*' => 'distinct|integer|min:1|exists:aircraft_types,id',
         ];
         $this->validatorMessages = [

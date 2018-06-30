@@ -32,11 +32,17 @@ class Airline extends ReferenceableModel {
 
     public function toArray()
     {
+        $airlineypeUrls = [];
+        foreach ($this->partners as $partner) {
+            $airlineypeUrls[] = Airline::toUrl($partner->id);
+        }
+
         return [
             'id' => $this->id,
             'name' => $this->name,
             'nationality' => $this->isFrom,
-            'sharePrice' => $this->share_price
+            'sharePrice' => $this->share_price,
+            'partners' => $airlineypeUrls
         ];
     }
 }

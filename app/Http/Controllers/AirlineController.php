@@ -10,6 +10,8 @@ class AirlineController extends BaseExtendedCrudController {
             'name' => 'required|string|max:255',
             'nationality' => 'required|integer|min:1|exists:country,id',
             'share_price' => 'required|numeric',
+            'partners' => 'present|array',
+            'partners.*' => 'distinct|integer|min:1|exists:airline,id',
         ];
         $this->validatorMessages = [
             'nationality.integer' => 'The nationality must be an integer id > 0',
@@ -26,5 +28,24 @@ class AirlineController extends BaseExtendedCrudController {
 
     protected function getModel() {
         return Airline::class;
+    }
+
+    private function syncAirlinePartners($request, $model) {
+        $partners = $request->input('partners');
+        $model->partners()->sync($partners);
+    }
+
+    protected function afterCreation($request, $model) {
+        $this->syncAirlinePartners($request, $model);
+    }
+
+    protected function afterUpdate($request, $model) {
+        $this->syncAirlinePartners($request, $model);
+    }
+
+    protected function afterPatch($request, $model) {
+        if ($request->has('partners')) {
+            $this->syncAirlinePartners($request, $model);
+        }
     }
 }

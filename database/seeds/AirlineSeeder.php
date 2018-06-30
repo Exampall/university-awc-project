@@ -11,6 +11,13 @@ class AirlineSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Models\Airline::class, 8)->create();
+        $airlines = factory(App\Models\Airline::class, 8)->create();
+
+        foreach ($airlines as $airline) {
+            $partners = App\Models\Airline::where('id', '<>', $airline->id)->inRandomOrder()->limit(rand(0, 2))->get();
+            foreach ($partners as $partner) {
+                $airline->partners()->attach(['partner' => $partner->id]);
+            }
+        }
     }
 }
