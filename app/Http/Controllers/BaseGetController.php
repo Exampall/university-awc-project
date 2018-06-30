@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\BaseController;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-abstract class BaseGetController extends Controller implements GetController {
+abstract class BaseGetController extends BaseController implements GetController {
 
     /**
      * @param Request $request
@@ -38,7 +38,6 @@ abstract class BaseGetController extends Controller implements GetController {
      */
     protected abstract function getModel();
 
-
     /**
      * for filtering query before getAll
      *
@@ -60,7 +59,7 @@ abstract class BaseGetController extends Controller implements GetController {
         try {
             $one = $model::findOrFail($id);
         } catch (ModelNotFoundException $e) {
-            throw new NotFoundHttpException(substr($model, strrpos($model, '\\') + 1) . '@' . $id . ' not found');
+            throw new NotFoundHttpException($this->getModelName($model) . '@' . $id . ' not found');
         }
 
         return $one;

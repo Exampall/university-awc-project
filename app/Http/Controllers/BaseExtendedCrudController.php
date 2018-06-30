@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\BaseCrudController;
 use App\Http\Controllers\ExtendedCrudController;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Http\Request;
 
 abstract class BaseExtendedCrudController extends BaseCrudController implements ExtendedCrudController {
@@ -18,7 +16,7 @@ abstract class BaseExtendedCrudController extends BaseCrudController implements 
     public function putOne(Request $request, $id) {
         $model = $this->findOne($id);
 
-        $input = $this->validateInput($request);
+        $input = $this->processInput($request);
 
         $model->update($input);
 
@@ -37,7 +35,7 @@ abstract class BaseExtendedCrudController extends BaseCrudController implements 
     public function patchOne(Request $request, $id) {
         $model = $this->findOne($id);
 
-        $input = $this->validatePatchInput($request);
+        $input = $this->processInput($request, true);
 
         $model->update($input);
 
@@ -49,13 +47,28 @@ abstract class BaseExtendedCrudController extends BaseCrudController implements 
     }
 
     /**
-     * validate input: array of key-values if input is valid
-     * should throw BadRequestHttpException if input is not valid, other types of exception for other errors
+     * process input by executing validation and transformation on it
      *
      * @param Request $request
+     * @param boolean $patch
      * @return array
      */
-    protected function validatePatchInput(Request $request): array {
-        return $request->input();
+    protected function processInput(Request $request, $patch = false): array{
+        $validator = $this->validator;
+        if ($patch) {
+            foreach ($validator as $key => $value) {
+                if (is_array($validator[$key])) {
+                    array_push($validator[$key], 'sometimes');
+                } else {
+                    $validator[$key] = $validator[$key] . '|sometimes';
+                }
+            }
+        }
+
+        $input = $this->validateInput($request, $validator);
+
+        $input = $this->transformInput($input);
+
+        return $input;
     }
 }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Laravel\Lumen\Routing\Controller as BaseController;
+use Laravel\Lumen\Routing\Controller;
 use Illuminate\Http\Request;
 
-class Controller extends BaseController {
+class BaseController extends Controller {
     /**
      * @param string $data
      * @param array $meta_data
@@ -80,5 +80,15 @@ class Controller extends BaseController {
         }
         
         return $this->formatResponse($data, $meta);
+    }
+
+    /**
+     * get model name given a model instance
+     *
+     * @param Model $model
+     * @return void
+     */
+    protected function getModelName($model) {
+        return substr($model, strrpos($model, '\\') + 1);
     }
 }
