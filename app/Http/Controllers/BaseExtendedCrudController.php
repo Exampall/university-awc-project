@@ -16,7 +16,7 @@ abstract class BaseExtendedCrudController extends BaseCrudController implements 
     public function putOne(Request $request, $id) {
         $model = $this->findOne($id);
 
-        $input = $this->processInput($request);
+        $input = $this->processInput($request, self::$validator, self::$allowedInputs);
 
         $model->update($input);
 
@@ -37,7 +37,8 @@ abstract class BaseExtendedCrudController extends BaseCrudController implements 
     public function patchOne(Request $request, $id) {
         $model = $this->findOne($id);
 
-        $input = $this->processInput($request, true);
+        $validator = $this->patchValidator();
+        $input = $this->processInput($request, $validator, self::$allowedInputs);
 
         $model->update($input);
 
@@ -51,29 +52,20 @@ abstract class BaseExtendedCrudController extends BaseCrudController implements 
     }
 
     /**
-     * process input by executing validation and transformation on it
+     * transform lumen input validator in a patch validator (no fields required)
      *
-     * @param Request $request
-     * @param boolean $patch
      * @return array
      */
-    protected function processInput(Request $request, $patch = false): array{
-        $validator = $this->validator;
-        if ($patch) {
-            foreach ($validator as $key => $value) {
-                if (is_array($validator[$key])) {
-                    array_push($validator[$key], 'sometimes');
-                } else {
-                    $validator[$key] = $validator[$key] . '|sometimes';
-                }
+    private function patchValidator(): array {
+        $validator = self::$validator;
+        foreach ($validator as $key => $value) {
+            if (is_array($validator[$key])) {
+                array_push($validator[$key], 'sometimes');
+            } else {
+                $validator[$key] = $validator[$key] . '|sometimes';
             }
         }
-
-        $input = $this->validateInput($request, $validator);
-
-        $input = $this->transformInput($input);
-
-        return $input;
+        return $validator;
     }
 
     /**

@@ -30,17 +30,25 @@ class AirRoute extends ReferenceableModel {
     public function aircraftTypes() {
         return $this->belongsToMany('App\Models\AircraftType', 'air_routes_types', 'air_route', 'aircraft_type');
     }
+    public function getAircraftTypes() {
+        $aircraftTypes = $this->aircraftTypes;
+
+        $result = [];
+        foreach ($aircraftTypes as $aircraftType)
+            array_push($result, [
+                'id' => $aircraftType->id,
+                'name' => $aircraftType->name,
+                'code' => $aircraftType->code,
+            ]);
+
+        return $result;
+    }
 
     public function slot() {
         return $this->hasMany('App\Models\AirRouteSlot', 'air_route');
     }
 
     public function toArray() {
-        $aircraftTypeUrls = [];
-        foreach ($this->aircraftTypes as $aircraftType) {
-            $aircraftTypeUrls[] = AircraftType::toUrl($aircraftType->id);
-        }
-
         $slotUrls = [];
         foreach ($this->slot as $slot) {
             $slotUrls[] = AirRouteSlot::toUrl($slot->id);
@@ -52,7 +60,6 @@ class AirRoute extends ReferenceableModel {
             'airportDeparture' => Airport::toUrl($this->departFrom->id),
             'airportArrival' => Airport::toUrl($this->arriveTo->id),
             'maxSlotReservations' => $this->max_slot_reservations,
-            'aircraftTypes' => $aircraftTypeUrls,
             'slot' => $slotUrls,
         ];
     }

@@ -21,7 +21,6 @@ class CreateAirRoutesSlotTable extends Migration
             
             $table->timestamps();
 
-            $table->unique(['air_route', 'day', 'schedule']);
             $table->foreign('air_route')
                 ->references('id')->on('air_routes')
                 ->onDelete('cascade')->onUpdate('cascade');

@@ -9,7 +9,7 @@ use Illuminate\Validation\Rule;
 class AircraftController extends BaseExtendedCrudController {
 
     public function __construct() {
-        $this->validator = [
+        self::$validator = [
             'type' => 'required|integer|min:1|exists:aircraft_types,id',
             'seats' => 'required|integer|min:0',
             'max_speed' => 'required|integer|min:0',
@@ -20,7 +20,7 @@ class AircraftController extends BaseExtendedCrudController {
             ],
             'airline' => 'required|integer|min:1|exists:airline,id',
         ];
-        $this->validatorMessages = [
+        self::$validatorMessages = [
             'type.integer' => 'The type must be an integer id > 0',
             'type.min' => 'The type must be an integer id > 0',
             'airline.integer' => 'The airline must be an integer id > 0', 
@@ -29,7 +29,7 @@ class AircraftController extends BaseExtendedCrudController {
             'exists' => 'The :attribute :input has not been found'
         ];
 
-        $this->allowedInputs = [
+        self::$allowedInputs = [
             'type',
             'seats',
             'max_speed',

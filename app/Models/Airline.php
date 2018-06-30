@@ -25,6 +25,20 @@ class Airline extends ReferenceableModel {
     public function partners() {
         return $this->belongsToMany('App\Models\Airline', 'airline_partners', 'airline', 'partner');
     }
+    public function getPartners() {
+        $partners = $this->partners;
+
+        $result = [];
+        foreach ($partners as $partner)
+            array_push($result, [
+                'id' => $partner->id,
+                'name' => $partner->name,
+                'nationality' => $partner->isFrom,
+                'sharePrice' => $partner->share_price,
+            ]);
+
+        return $result;
+    }
 
     public function reservations() {
         return $this->belongsToMany('App\Models\AirRouteSlot', 'airline_reservations', 'airline', 'slot');

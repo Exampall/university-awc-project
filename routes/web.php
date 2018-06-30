@@ -32,6 +32,11 @@ $router->group(['prefix' => App\Models\Airline::$path], function () use ($router
     $router->delete('/{id}', 'AirlineController@deleteOne');
     $router->put('/{id}', 'AirlineController@putOne');
     $router->patch('/{id}', 'AirlineController@patchOne');
+    $router->group(['prefix' => '{airline}/partner'], function () use ($router) {
+        $router->get('/', 'AirlineController@getPartners');
+        $router->post('/', 'AirlineController@postPartner');
+        $router->delete('/{id}', 'AirlineController@deletePartner');
+    });
 });
 
 $router->group(['prefix' => 'aircraft'], function () use ($router) {
@@ -50,9 +55,19 @@ $router->group(['prefix' => App\Models\AirRoute::$path], function () use ($route
     $router->delete('/{id}', 'AirRouteController@deleteOne');
     $router->put('/{id}', 'AirRouteController@putOne');
     $router->patch('/{id}', 'AirRouteController@patchOne');
+    $router->group(['prefix' => '{airRoute}/' . App\Models\AircraftType::$path], function () use ($router) {
+        $router->get('/', 'AirRouteController@getAircraftTypes');
+        $router->post('/', 'AirRouteController@postAircraftType');
+        $router->delete('/{id}', 'AirRouteController@deleteAircraftType');
+    });
 });
 $router->group(['prefix' => App\Models\AirRouteSlot::$path], function () use ($router) {
+    $router->get('/', 'AirRouteSlotController@getAll');
     $router->get('/{id}', 'AirRouteSlotController@getOne');
+    $router->post('/', 'AirRouteSlotController@postOne');
+    $router->put('/{id}', 'AirRouteSlotController@putOne');
+    $router->patch('/{id}', 'AirRouteSlotController@patchOne');
+    $router->delete('/{id}', 'AirRouteSlotController@deleteOne');
 });
 
 $router->group(['prefix' => App\Models\AircraftType::$path], function () use ($router) {
