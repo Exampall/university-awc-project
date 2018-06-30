@@ -20,6 +20,8 @@ abstract class BaseExtendedCrudController extends BaseCrudController implements 
 
         $model->update($input);
 
+        $this->afterUpdate($request, $model);
+
         return response()
             ->json(
                 [],
@@ -38,6 +40,8 @@ abstract class BaseExtendedCrudController extends BaseCrudController implements 
         $input = $this->processInput($request, true);
 
         $model->update($input);
+
+        $this->afterPatch($request, $model);
 
         return response()
             ->json(
@@ -70,5 +74,27 @@ abstract class BaseExtendedCrudController extends BaseCrudController implements 
         $input = $this->transformInput($input);
 
         return $input;
+    }
+
+    /**
+     * after update callback
+     *
+     * @param Request $request
+     * @param Model $model
+     * @return void
+     */
+    protected function afterUpdate($request, $model) {
+
+    }
+
+    /**
+     * after patch callback
+     *
+     * @param Request $request
+     * @param Model $model
+     * @return void
+     */
+    protected function afterPatch($request, $model) {
+
     }
 }

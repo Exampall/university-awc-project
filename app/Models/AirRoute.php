@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\ReferenceableModel;
 
-class AirRoute extends Model {
+class AirRoute extends ReferenceableModel {
     protected $table = 'air_routes';
+    public static $path = 'air-route';
 
     protected $fillable = [
         'type',
@@ -35,34 +36,24 @@ class AirRoute extends Model {
     }
 
     public function toArray() {
+        $aircraftTypeUrls = [];
+        foreach ($this->aircraftTypes as $aircraftType) {
+            $aircraftTypeUrls[] = AircraftType::toUrl($aircraftType->id);
+        }
+
+        $slotUrls = [];
+        foreach ($this->slot as $slot) {
+            $slotUrls[] = AirRouteSlot::toUrl($slot->id);
+        }
+
         return [
             'id' => $this->id,
             'type' => $this->type,
-            'airportDeparture' => $this->departFrom,
-            'airportArrival' => $this->arriveTo,
+            'airportDeparture' => Airport::toUrl($this->departFrom->id),
+            'airportArrival' => Airport::toUrl($this->arriveTo->id),
             'maxSlotReservations' => $this->max_slot_reservations,
+            'aircraftTypes' => $aircraftTypeUrls,
+            'slot' => $slotUrls,
         ];
-    }
-}
-
-class AirRouteSlot extends Model {
-    protected $table = 'air_routes_slot';
-
-    protected $fillable = [
-        'air_route',
-        'day',
-        'schedule',
-    ];
-    protected $hidden = [
-        'created_at',
-        'updated_at',
-    ];
-
-    public function partOf() {
-        return $this->belongsTo('App\Models\AirRoute', 'air_route');
-    }
-
-    public function reservedBy() {
-        return $this->belongsToMany('App\Models\Airline', 'airline_reservations', 'slot', 'airline');
     }
 }

@@ -62,6 +62,18 @@ abstract class BaseGetController extends BaseController implements GetController
             throw new NotFoundHttpException($this->getModelName($model) . '@' . $id . ' not found');
         }
 
+        $one = $this->loadOne($one);
+
         return $one;
+    }
+
+    /**
+     * given a model instance, load or customize it
+     *
+     * @param Model $model
+     * @return mixed
+     */
+    protected function loadOne($model) {
+        return $model;
     }
 }

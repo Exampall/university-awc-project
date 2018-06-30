@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\ReferenceableModel;
 
-class AircraftType extends Model {
+class AircraftType extends ReferenceableModel {
     protected $table = 'aircraft_types';
+    public static $path = 'aircraft-type';
 
     protected $fillable = [
         'name',

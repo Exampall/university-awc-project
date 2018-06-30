@@ -23,7 +23,9 @@ abstract class BaseCrudController extends BaseGetController implements CrudContr
     public function postOne(Request $request) {
         $input = $this->processInput($request);
 
-        $this->getModel()::create($input);
+        $model = $this->getModel()::create($input);
+
+        $this->afterCreation($request, $model);
 
         return response()
             ->json(
@@ -41,6 +43,8 @@ abstract class BaseCrudController extends BaseGetController implements CrudContr
 
         $one->delete();
 
+        $this->afterDeletion($one);
+
         return response()
             ->json(
                 [],
@@ -55,7 +59,7 @@ abstract class BaseCrudController extends BaseGetController implements CrudContr
      * @return array
      */
     protected function processInput(Request $request): array{
-        $input = $this->validateInput($request);
+        $input = $this->validateInput($request, $this->validator);
 
         $input = $this->transformInput($input);
 
@@ -117,5 +121,26 @@ abstract class BaseCrudController extends BaseGetController implements CrudContr
      */
     protected function transformInput($input): array{
         return $input;
+    }
+
+    /**
+     * after creation callback
+     *
+     * @param Request $request
+     * @param Model $model
+     * @return void
+     */
+    protected function afterCreation($request, $model) {
+
+    }
+
+    /**
+     * after deletion callback
+     *
+     * @param Model $model
+     * @return void
+     */
+    protected function afterDeletion($model) {
+
     }
 }

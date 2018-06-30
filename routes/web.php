@@ -16,14 +16,22 @@ $router->group(['prefix' => 'country'], function () use ($router) {
     $router->get('/{id}', 'CountryController@getOne');
 });
 
-$router->group(['prefix' => 'airport'], function () use ($router) {
+$router->group(['prefix' => App\Models\Airport::$path], function () use ($router) {
     $router->get('/', 'AirportController@getAll');
     $router->get('/{id}', 'AirportController@getOne');
+    $router->post('/', 'AirportController@postOne');
+    $router->delete('/{id}', 'AirportController@deleteOne');
+    $router->put('/{id}', 'AirportController@putOne');
+    $router->patch('/{id}', 'AirportController@patchOne');
 });
 
 $router->group(['prefix' => App\Models\Airline::$path], function () use ($router) {
     $router->get('/', 'AirlineController@getAll');
     $router->get('/{id}', 'AirlineController@getOne');
+    $router->post('/', 'AirlineController@postOne');
+    $router->delete('/{id}', 'AirlineController@deleteOne');
+    $router->put('/{id}', 'AirlineController@putOne');
+    $router->patch('/{id}', 'AirlineController@patchOne');
 });
 
 $router->group(['prefix' => 'aircraft'], function () use ($router) {
@@ -35,12 +43,19 @@ $router->group(['prefix' => 'aircraft'], function () use ($router) {
     $router->patch('/{id}', 'AircraftController@patchOne');
 });
 
-$router->group(['prefix' => 'air-route'], function () use ($router) {
+$router->group(['prefix' => App\Models\AirRoute::$path], function () use ($router) {
     $router->get('/', 'AirRouteController@getAll');
     $router->get('/{id}', 'AirRouteController@getOne');
+    $router->post('/', 'AirRouteController@postOne');
+    $router->delete('/{id}', 'AirRouteController@deleteOne');
+    $router->put('/{id}', 'AirRouteController@putOne');
+    $router->patch('/{id}', 'AirRouteController@patchOne');
+});
+$router->group(['prefix' => App\Models\AirRouteSlot::$path], function () use ($router) {
+    $router->get('/{id}', 'AirRouteSlotController@getOne');
 });
 
-$router->group(['prefix' => 'aircraft-type'], function () use ($router) {
+$router->group(['prefix' => App\Models\AircraftType::$path], function () use ($router) {
     $router->get('/', 'AircraftTypeController@getAll');
     $router->get('/{id}', 'AircraftTypeController@getOne');
 });
