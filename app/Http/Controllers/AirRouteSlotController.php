@@ -13,6 +13,7 @@ class AirRouteSlotController extends BaseExtendedCrudController {
             'air_route' => 'required|integer|min:1|exists:air_routes,id',
             'day' => 'required|integer|min:1|max:7',
             'schedule' => 'required|date_format:H:i',
+            'max_reservations' => 'required|integer|min:1',
         ];
 
         self::$validatorMessages = [
@@ -25,6 +26,7 @@ class AirRouteSlotController extends BaseExtendedCrudController {
             'air_route',
             'day',
             'schedule',
+            'max_reservations'
         ];
     }
 

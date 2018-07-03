@@ -11,8 +11,7 @@ class AirRoute extends ReferenceableModel {
     protected $fillable = [
         'type',
         'airport_departure',
-        'airport_arrival',
-        'max_slot_reservations',
+        'airport_arrival'
     ];
     protected $hidden = [
         'created_at',
@@ -59,7 +58,6 @@ class AirRoute extends ReferenceableModel {
             'type' => $this->type,
             'airportDeparture' => Airport::toUrl($this->departFrom->id),
             'airportArrival' => Airport::toUrl($this->arriveTo->id),
-            'maxSlotReservations' => $this->max_slot_reservations,
             'slot' => $slotUrls,
         ];
     }

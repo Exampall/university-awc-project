@@ -12,6 +12,7 @@ class AirRouteSlot extends ReferenceableModel {
         'air_route',
         'day',
         'schedule',
+        'max_reservations'
     ];
     protected $hidden = [
         'created_at',
@@ -31,7 +32,8 @@ class AirRouteSlot extends ReferenceableModel {
             'id' => $this->id,
             'air_route' => AirRoute::toUrl($this->air_route),
             'day' => $this->day,
-            'schedule' => $this->schedule
+            'schedule' => $this->schedule,
+            'max_reservations' => $this->max_reservations,
         ];
     }
 }

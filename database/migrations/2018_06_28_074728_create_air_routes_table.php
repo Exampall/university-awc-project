@@ -18,7 +18,6 @@ class CreateAirRoutesTable extends Migration
             $table->char('type', 1);
             $table->unsignedBigInteger('airport_departure');
             $table->unsignedBigInteger('airport_arrival');
-            $table->unsignedInteger('max_slot_reservations');
 
             $table->timestamps();
 

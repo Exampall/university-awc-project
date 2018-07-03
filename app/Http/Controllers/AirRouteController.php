@@ -17,7 +17,6 @@ class AirRouteController extends BaseExtendedCrudController {
             ],
             'airport_departure' => 'required|integer|min:1|exists:airport,id|different:airport_arrival',
             'airport_arrival' => 'required|integer|min:1|exists:airport,id|different:airport_departure',
-            'max_slot_reservations' => 'required|integer|min:1',
         ];
 
         self::$validatorMessages = [
@@ -34,7 +33,6 @@ class AirRouteController extends BaseExtendedCrudController {
             'type',
             'airport_departure',
             'airport_arrival',
-            'max_slot_reservations',
         ];
     }
 

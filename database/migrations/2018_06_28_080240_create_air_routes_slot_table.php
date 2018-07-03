@@ -18,6 +18,7 @@ class CreateAirRoutesSlotTable extends Migration
             $table->unsignedBigInteger('air_route');
             $table->enum('day', [1, 2, 3, 4, 5, 6, 7]);
             $table->time('schedule');
+            $table->unsignedInteger('max_reservations');
             
             $table->timestamps();
 

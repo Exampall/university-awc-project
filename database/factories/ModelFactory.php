@@ -71,7 +71,6 @@ $factory->define(App\Models\AirRoute::class, function (Faker\Generator $faker) {
         'type' => $faker->randomElement(['I', 'N']),
         'airport_departure' => $airport_departure,
         'airport_arrival' => $airport_arrival,
-        'max_slot_reservations' => $faker->numberBetween(1, 15),
     ];
 });
 
@@ -82,5 +81,6 @@ $factory->define(App\Models\AirRouteSlot::class, function (Faker\Generator $fake
     return [
         'day' => $faker->randomElement([1, 2, 3, 4, 5, 6, 7]),
         'schedule' => $faker->unique()->time('H:i'),
+        'max_reservations' => $faker->numberBetween(1, 15),
     ];
 });
