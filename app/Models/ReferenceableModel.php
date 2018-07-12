@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\URL;
 
 class ReferenceableModel extends Model {
     public static $path = '';
 
     protected static function toUrl($id, $params = []): array{
         $reference = [
-            '_self' => env('BASE_URL') . '/' . static::$path . '/' . $id,
+            '_self' => URL::to('/') . '/' . static::$path . '/' . $id,
         ];
         if (count($params)) {
             $reference['params'] = [];

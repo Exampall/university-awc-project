@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Laravel\Lumen\Routing\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 
 class BaseController extends Controller {
     /**
@@ -41,7 +42,7 @@ class BaseController extends Controller {
      * @return mixed
      */
     protected function paginate(Request $request, $query) {
-        $url = env('BASE_URL') . $request->path();
+        $url = URL::to('/') . '/' . $request->path();
         $additionalQueryParams = $request->except(['page', 'batch']);
         $url .= '?';
         foreach ($additionalQueryParams as $param => $value) {
