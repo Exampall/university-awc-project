@@ -33,7 +33,7 @@
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-update-cmd": [
-            "php artisan migrate:fresh --seed"
+            "@php artisan migrate:fresh --seed"
         ]
     },
     "config": {
