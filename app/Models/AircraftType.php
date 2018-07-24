@@ -20,4 +20,19 @@ class AircraftType extends ReferenceableModel {
     public function aircrafts() {
         return $this->hasMany('App\Models\Aircraft', 'type');
     }
+
+    public function airoutes() {
+        return $this->belongsToMany('App\Models\AirRoute', 'air_routes_types', 'aircraft_type', 'air_route');
+    }
+    public function getAirRoutes() {
+        $airRoutes = $this->airoutes;
+
+        $result = [];
+        foreach ($airRoutes as $airRoute)
+            array_push($result, [
+                'id' => $airRoute->id
+            ]);
+
+        return $result;
+    }
 }

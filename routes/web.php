@@ -73,4 +73,7 @@ $router->group(['prefix' => App\Models\AirRouteSlot::$path], function () use ($r
 $router->group(['prefix' => App\Models\AircraftType::$path], function () use ($router) {
     $router->get('/', 'AircraftTypeController@getAll');
     $router->get('/{id}', 'AircraftTypeController@getOne');
+    $router->group(['prefix' => '{aircraftType}/' . App\Models\AirRoute::$path], function () use ($router) {
+        $router->get('/', 'AircraftTypeController@getAirRoutes');
+    });
 });
